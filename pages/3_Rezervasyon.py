@@ -1,9 +1,18 @@
 import streamlit as st
 
-# Sadece Kulüp Başkanı girebilir
-if "role" not in st.session_state or st.session_state["role"] != "club":
-    st.error("🔒 Yetki Hatası: Bu sayfaya sadece Kulüp Başkanları erişebilir!")
+# 🔒 YETKİ KONTROL KİLİDİ
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.warning("⚠️ Lütfen önce ana sayfadan giriş yapın kanka!")
     st.stop()
+
+if st.session_state.get("role") != "club":
+    st.error("🔒 Yetki Hatası: Bu sayfa sadece Kulüp Yöneticileri ve Öğrenciler içindir!")
+    st.stop()
+
+# --- Sayfanın kalan orijinal rezervasyon kodları aşağıda aynen devam ediyor ---
+st.title("📅 Yeni Sınıf Rezervasyon Talebi")
+st.write(f"Aktif Hesap: **{st.session_state['email']}**")
+# (Geri kalan form elemanları...)
     
     import streamlit as st
 
