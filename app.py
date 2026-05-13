@@ -1,5 +1,21 @@
 import streamlit as st
 
+# 🔑 SOL MENÜYÜ GİRİŞ YAPANA KADAR GİZLEME AYARI
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.set_page_config(initial_sidebar_state="collapsed") # Sol menüyü tamamen kapatır
+    
+    # Sol menünün içindeki butonları kodla da gizliyoruz (Kullanıcı yandan açamasın diye)
+    st.markdown(
+        """
+        <style>
+            [data-testid="stSidebarNav"] {display: none !important;}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    import streamlit as st
+
 st.set_page_config(
     page_title="ClubSpace ITU",
     page_icon="🏫",
