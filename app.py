@@ -13,6 +13,31 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
         """,
         unsafe_allow_html=True
     )
+
+    import streamlit as st
+
+# Giriş yapıldıysa rol kontrolüne göre sol menüyü şekillendiriyoruz
+if "logged_in" in st.session_state and st.session_state["logged_in"]:
+    rol = st.session_state.get("role", "club") # Varsayılan olarak kulüp başkanı
+    
+    if rol == "club":
+        # Kulüp başkanına Onay Paneli'ni CSS ile gizliyoruz
+        st.markdown(
+            """<style>
+            [data-testid="stSidebarNav"] li:nth-child(4) {display: none !important;} 
+            </style>""", 
+            unsafe_allow_html=True
+        )
+    elif rol == "admin":
+        # Yöneticiye de Rezervasyon Yap sayfasını gizliyoruz
+        st.markdown(
+            """<style>
+            [data-testid="stSidebarNav"] li:nth-child(3) {display: none !important;}
+            </style>""", 
+            unsafe_allow_html=True
+        )
+
+    
     
     import streamlit as st
 
