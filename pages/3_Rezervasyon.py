@@ -1,5 +1,12 @@
 import streamlit as st
 
+# Sadece Kulüp Başkanı girebilir
+if "role" not in st.session_state or st.session_state["role"] != "club":
+    st.error("🔒 Yetki Hatası: Bu sayfaya sadece Kulüp Başkanları erişebilir!")
+    st.stop()
+    
+    import streamlit as st
+
 st.title("📅 Yeni Sınıf Rezervasyon Talebi")
 st.write("Etkinliğiniz için rezervasyon formunu eksiksiz doldurun.")
 
