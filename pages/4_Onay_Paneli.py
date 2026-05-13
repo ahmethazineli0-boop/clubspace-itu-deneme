@@ -1,5 +1,11 @@
 import streamlit as st
 
+# Sadece Onay Yetkilileri girebilir
+if "role" not in st.session_state or st.session_state["role"] != "admin":
+    st.error("🔒 Yetki Hatası: Bu sayfa sadece Yönetici ve Onaylayıcılar içindir!")
+    st.stop()
+    import streamlit as st
+
 st.title("📋 Yönetici Onay Paneli")
 st.write("Sistemdeki onay bekleyen aktif rezervasyon talepleri.")
 
