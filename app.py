@@ -1,24 +1,60 @@
 import streamlit as st
 
-# Giriş yapıldıysa rol kontrolüne göre sol menüyü şekillendiriyoruz
+# 🔑 SOL MENÜYÜ GİRİŞ YAPANA KADAR GİZLEME AYARI
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.set_page_config(initial_sidebar_state="collapsed")
+    st.markdown(
+        """<style>[data-testid="stSidebarNav"] {display: none !important;}</style>""",
+        unsafe_allow_html=True
+    )
+
+st.title("🔑 ClubSpace İTÜ Giriş Paneli")
+st.write("Lütfen İTÜ test hesap bilgilerinizle giriş yapın.")
+
+# Giriş Formu Elemanları
+email = st.text_input("E-posta Adresi")
+password = st.text_input("Şifre", type="password")
+
+if st.button("Giriş Yap"):
+    if password == "1234":
+        # Kulüp ve Öğrenci Rolü Tanımlaması
+        if email in ["kulup@itu.edu.tr", "ogrenci@itu.edu.tr"]:
+            st.session_state["logged_in"] = True
+            st.session_state["role"] = "club"
+            st.session_state["email"] = email
+            st.success(f"Başarıyla Giriş Yapıldı! Rol: Kulüp Yöneticisi / Öğrenci ({email})")
+            st.rerun()
+            
+        # Onay Yetkilileri (Admin/Yönetici) Rolü Tanımlaması
+        elif email in ["danisman@itu.edu.tr", "koordinator@itu.edu.tr", "bina@itu.edu.tr"]:
+            st.session_state["logged_in"] = True
+            st.session_state["role"] = "admin"
+            st.session_state["email"] = email
+            st.success(f"Başarıyla Giriş Yapıldı! Rol: Onay Yetkilisi ({email})")
+            st.rerun()
+            
+        else:
+            st.error("Bu e-posta adresi sistemde tanımlı değil kanka!")
+    else:
+        st.error("Hatalı şifre! Lütfen tekrar deneyin.")
+
+# Giriş yapıldıktan sonra dinamik menü gizleme/gösterme CSS şovları
 if "logged_in" in st.session_state and st.session_state["logged_in"]:
-    rol = st.session_state.get("role", "club") # Varsayılan olarak kulüp başkanı
+    rol = st.session_state.get("role", "club")
+    st.sidebar.write(f"📋 Aktif Kullanıcı: {st.session_state['email']}")
     
     if rol == "club":
-        # Kulüp başkanına Onay Paneli'ni CSS ile gizliyoruz
+        # Kulüp başkanına Onay Paneli'ni (4. sayfayı) gizliyoruz
         st.markdown(
-            """<style>
-            [data-testid="stSidebarNav"] li:nth-child(4) {display: none !important;} 
-            </style>""", 
+            """<style>[data-testid="stSidebarNav"] li:nth-child(4) {display: none !important;}</style>""", 
             unsafe_allow_html=True
         )
     elif rol == "admin":
-        # Yöneticiye de Rezervasyon Yap sayfasını gizliyoruz
+        # Yöneticiye de Rezervasyon Yap (3. sayfayı) gizliyoruz
         st.markdown(
-            """<style>
-            [data-testid="stSidebarNav"] li:nth-child(3) {display: none !important;}
-            </style>""", 
+            """<style>[data-testid="stSidebarNav"] li:nth-child(3) {display: none !important;}</style>""", 
             unsafe_allow_html=True
+        )
         )
 
 import streamlit as st
