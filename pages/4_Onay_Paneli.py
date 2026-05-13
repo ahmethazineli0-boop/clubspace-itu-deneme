@@ -1,4 +1,4 @@
-import streamlit st
+import streamlit as st
 
 st.title("📋 Yönetici Onay Paneli")
 st.write("Sistemdeki onay bekleyen aktif rezervasyon talepleri.")
