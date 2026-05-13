@@ -55,8 +55,7 @@ if "logged_in" in st.session_state and st.session_state["logged_in"]:
             """<style>[data-testid="stSidebarNav"] li:nth-child(3) {display: none !important;}</style>""", 
             unsafe_allow_html=True
         )
-        )
-
+        
 import streamlit as st
 
 # 🔑 SOL MENÜYÜ GİRİŞ YAPANA KADAR GİZLEME AYARI
